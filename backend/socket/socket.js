@@ -1,3 +1,42 @@
+import http from "http"
+import express from "express"
+import { Server } from "socket.io"
+
+let app = express()
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors: { origin: "https://vibely-frontend-rdhy.onrender.com" }
+})
+
+const userSocketMap = {}
+export const getReceiverSocketId = (receiver) => userSocketMap[receiver]
+
+io.on("connection", (socket) => {
+  const userId = socket.handshake.query.userId
+  if (userId != undefined) {
+    userSocketMap[userId] = socket.id
+  }
+
+  // Emit current online users
+  io.emit("getOnlineUsers", Object.keys(userSocketMap))
+
+  // Handle sending messages
+  socket.on("sendMessage", ({ senderId, receiverId, text, createdAt }) => {
+    const receiverSocket = userSocketMap[receiverId]
+    if (receiverSocket) {
+      io.to(receiverSocket).emit("newMessage", { senderId, text, createdAt })
+    }
+  })
+
+  socket.on("disconnect", () => {
+    delete userSocketMap[userId]
+    io.emit("getOnlineUsers", Object.keys(userSocketMap))
+  })
+})
+
+export { app, server, io }
+
+
 // import http from "http"
 // import express from "express"
 // import { Server } from "socket.io"
@@ -28,41 +67,3 @@
 // })
 // })
 // export {app,server,io}
-
-import http from "http"
-import express from "express"
-import { Server } from "socket.io"
-
-let app = express()
-const server = http.createServer(app)
-const io = new Server(server, {
-  cors: { origin: "http://localhost:5173" }
-})
-
-const userSocketMap = {}
-export const getReceiverSocketId = (receiver) => userSocketMap[receiver]
-
-io.on("connection", (socket) => {
-  const userId = socket.handshake.query.userId
-  if (userId != undefined) {
-    userSocketMap[userId] = socket.id
-  }
-
-  // Emit current online users
-  io.emit("getOnlineUsers", Object.keys(userSocketMap))
-
-  // Handle sending messages
-  socket.on("sendMessage", ({ senderId, receiverId, text, createdAt }) => {
-    const receiverSocket = userSocketMap[receiverId]
-    if (receiverSocket) {
-      io.to(receiverSocket).emit("newMessage", { senderId, text, createdAt })
-    }
-  })
-
-  socket.on("disconnect", () => {
-    delete userSocketMap[userId]
-    io.emit("getOnlineUsers", Object.keys(userSocketMap))
-  })
-})
-
-export { app, server, io }
