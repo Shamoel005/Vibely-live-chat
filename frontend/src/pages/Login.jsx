@@ -107,57 +107,54 @@ function Login() {
     }
 
     return (
-        <div className='min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4'>
-            <div className='w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl'>
-                {/* Header */}
-                <div className='bg-gradient-to-r from-purple-600 to-indigo-600 py-12 px-6 text-center'>
-                    <div className='w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-sm'>
-                        <FaLock className='text-white text-2xl' />
-                    </div>
-                    <h1 className='text-3xl font-bold text-white mb-2'>Welcome Back</h1>
-                    <p className='text-purple-100'>Sign in to your Vibely account</p>
+        <div className='w-full h-[100vh] bg-slate-200 flex items-center justify-center p-4'>
+            <div className='w-full max-w-[500px] bg-white rounded-lg shadow-gray-400 shadow-lg overflow-hidden'>
+                {/* Header - Keeping your original design */}
+                <div className='w-full h-[200px] bg-[#663399] rounded-b-[30%] shadow-gray-400 shadow-lg flex items-center justify-center'>
+                    <h1 className='text-black font-bold text-[30px]'>Login to <span className='text-white'>Vibely</span></h1>
                 </div>
 
                 {/* Form */}
-                <form className='p-8 space-y-6' onSubmit={handleLogin}>
+                <form className='w-full flex flex-col gap-[25px] items-center p-8' onSubmit={handleLogin}>
+                    
                     {/* Email Input */}
-                    <div className='space-y-2'>
+                    <div className='w-[90%] space-y-2'>
                         <label className='text-sm font-medium text-gray-700 flex items-center gap-2'>
-                            <FaEnvelope className='text-purple-600' />
+                            <FaEnvelope className='text-[#663399]' />
                             Email Address
                         </label>
                         <div className='relative'>
                             <input 
                                 type="email" 
                                 placeholder='Enter your email'
-                                className='w-full h-12 px-4 pl-11 pr-4 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 bg-white text-gray-700 placeholder-gray-400'
+                                className='w-full h-[50px] outline-none border-2 border-[#663399] px-4 pl-11 bg-white rounded-lg shadow-gray-200 shadow-lg text-gray-700 text-[17px] transition-all duration-200 focus:shadow-purple-200'
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                                 disabled={loading}
                             />
-                            <FaEnvelope className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400' />
+                            <FaEnvelope className='absolute left-4 top-1/2 transform -translate-y-1/2 text-[#663399]' />
                         </div>
                     </div>
 
                     {/* Password Input */}
-                    <div className='space-y-2'>
+                    <div className='w-[90%] space-y-2'>
                         <label className='text-sm font-medium text-gray-700 flex items-center gap-2'>
-                            <FaLock className='text-purple-600' />
+                            <FaLock className='text-[#663399]' />
                             Password
                         </label>
                         <div className='relative'>
                             <input 
                                 type={show ? "text" : "password"} 
                                 placeholder='Enter your password'
-                                className='w-full h-12 px-4 pl-11 pr-12 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-200 bg-white text-gray-700 placeholder-gray-400'
+                                className='w-full h-[50px] outline-none border-2 border-[#663399] px-4 pl-11 pr-12 bg-white rounded-lg shadow-gray-200 shadow-lg text-gray-700 text-[17px] transition-all duration-200 focus:shadow-purple-200'
                                 onChange={(e) => setPassword(e.target.value)}
                                 value={password}
                                 disabled={loading}
                             />
-                            <FaLock className='absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400' />
+                            <FaLock className='absolute left-4 top-1/2 transform -translate-y-1/2 text-[#663399]' />
                             <button 
                                 type="button"
-                                className='absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-200'
+                                className='absolute right-4 top-1/2 transform -translate-y-1/2 text-[#663399] hover:text-purple-800 transition-colors duration-200'
                                 onClick={() => setShow(prev => !prev)}
                                 disabled={loading}
                             >
@@ -168,7 +165,7 @@ function Login() {
 
                     {/* Error Message */}
                     {err && (
-                        <div className='bg-red-50 border border-red-200 rounded-lg p-3'>
+                        <div className='w-[90%] bg-red-50 border border-red-200 rounded-lg p-3'>
                             <p className='text-red-600 text-sm flex items-center gap-2'>
                                 <span className='w-2 h-2 bg-red-500 rounded-full'></span>
                                 {err}
@@ -178,38 +175,34 @@ function Login() {
 
                     {/* Login Button */}
                     <button 
-                        type="submit"
-                        className='w-full h-12 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none'
+                        className='px-6 py-3 bg-[#663399] rounded-2xl shadow-gray-400 shadow-lg text-[18px] w-[200px] font-semibold text-white hover:shadow-inner transform hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center gap-2'
                         disabled={loading}
+                        type="submit"
                     >
                         {loading ? (
                             <>
-                                <div className='w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
+                                <div className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
                                 Signing In...
                             </>
                         ) : (
                             <>
                                 <FaSignInAlt />
-                                Sign In
+                                Login
                             </>
                         )}
                     </button>
 
                     {/* Sign Up Link */}
-                    <div className='text-center pt-4 border-t border-gray-200'>
-                        <p className='text-gray-600'>
-                            Don't have an account?{' '}
-                            <button 
-                                type="button"
-                                onClick={() => navigate("/signup")}
-                                className='text-purple-600 font-semibold hover:text-purple-700 transition-colors duration-200 flex items-center justify-center gap-2 mx-auto'
-                                disabled={loading}
-                            >
-                                <FaUserPlus />
-                                Sign Up
-                            </button>
-                        </p>
-                    </div>
+                    <p className='text-gray-600 cursor-pointer mt-2'>
+                        Want to create a new account?{' '}
+                        <span 
+                            className='text-[#663399] font-bold hover:text-purple-800 transition-colors duration-200 flex items-center gap-1 justify-center'
+                            onClick={() => !loading && navigate("/signup")}
+                        >
+                            <FaUserPlus />
+                            Sign Up
+                        </span>
+                    </p>
                 </form>
             </div>
         </div>
